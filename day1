@@ -52,3 +52,25 @@ class Solution:
             merged.append(word1[i:])
 
         return "".join(merged)
+
+C++ 
+#include<string>
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        string s="";
+        int n =word1.size();
+        int n2 = word2.size();
+        int i=0;
+        while(i<n && i<n2)
+        {
+            s+=word1[i];
+            s+=word2[i];
+            ++i;
+        }
+
+        if(n<n2) s+=word2.substr(i);
+        if(n2<n) s+=word1.substr(i);
+    return s;
+    }
+};
