@@ -1,0 +1,102 @@
+392. Is Subsequence
+  
+Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+
+A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+
+Example 1:
+
+Input: s = "abc", t = "ahbgdc"
+Output: true
+Example 2:
+
+Input: s = "axc", t = "ahbgdc"
+Output: false
+ 
+Constraints:
+
+0 <= s.length <= 100
+0 <= t.length <= 104
+s and t consist only of lowercase English letters.
+ 
+
+Follow up: Suppose there are lots of incoming s, say s1, s2, ..., sk where k >= 109, and you want to check one by one to see if t has its subsequence. In this scenario, how would you change your code?
+
+  Code :
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int p = size(s);
+        int j=0;
+        for(int i=0;i<size(t);++i)
+        {
+            if(s[j]==t[i] && j<p)
+            {
+                ++j;
+            }
+        }
+        if(j==p) return true;
+        else return false;
+    }
+};
+
+
+11. Container With Most Water
+
+You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.
+
+Notice that you may not slant the container.
+
+Example 1:
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+Example 2:
+
+Input: height = [1,1]
+Output: 1
+ 
+Constraints:
+
+n == height.length
+2 <= n <= 10^5
+0 <= height[i] <= 10^4
+
+Code:
+#include <algorithm> 
+#include <vector>    
+
+using namespace std;
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        
+        int i = 0, j = height.size() - 1;
+        int total = 0;
+
+        
+        auto totalwater = [](int i, int j, int leftval, int rightval) {
+            return (j - i) * (std::min(leftval, rightval));
+        };
+
+        
+        while (i < j) {
+            
+            int k = totalwater(i, j, height[i], height[j]);
+            if (total < k) { total = k; }
+
+            
+            if (height[i] < height[j]) {
+                i++;
+            } else {
+                j--;
+            }
+        }
+        return total;
+    }
+};
